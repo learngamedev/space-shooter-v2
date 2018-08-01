@@ -33,3 +33,42 @@ function getNewQuad(properties, dWidth, dHeight)
     local pro = properties
     return love.graphics.newQuad(pro.x, pro.y, pro.width, pro.height, dWidth, dHeight)
 end
+
+-- Utility get string table func
+function getStringTable(str)
+    local table_string = {}
+    str:gsub(".", function(c) table.insert(table_string, c) end)
+    return table_string
+end
+
+-- Generate quads for letters from font file format: .png
+local FONTCONTENT = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
+local TABLE_FONTCONTENT = getStringTable(FONTCONTENT)
+local FONTIMAGE = love.graphics.newImage("assets/fonts/normal.png")
+
+function getLetterQuads()
+    local letter_quads = {}
+
+    local k = 0
+    for i = 0, 7 do
+        for j = 0, 14 do
+            if (i == 6) and (j == 5) then
+                return letter_quads
+            end
+
+            k = k + 1
+            local quad = love.graphics.newQuad(j * 20, i * 20, 20, 20, FONTIMAGE:getDimensions())
+            letter_quads[tostring(TABLE_FONTCONTENT[k])] = quad
+        end
+    end
+end
+
+-- Print custom string in bitmap sprite font
+function printString(text, x, y)
+    table_text = getStringTable(text)
+    local Letter_Quads = getLetterQuads()
+
+    for i = 0, #table_text - 1 do
+        love.graphics.draw(FONTIMAGE, Letter_Quads[table_text[i+1]], x + i * 17, y)
+    end
+end

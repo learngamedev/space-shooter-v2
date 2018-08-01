@@ -18,6 +18,8 @@ function love.draw()
     for k, v in ipairs(Bullets) do
         v:render()
     end
+
+    printString("Hello, world", 0, 100)
 end
 
 function love.update(dt)

@@ -8,6 +8,7 @@ local SPEED = 150
 function Player:init()
     self.m_x = love.graphics.getWidth() / 2 - SPRITEWIDTH / 2
     self.m_y = love.graphics.getHeight() / 2 - SPRITEHEIGHT / 2
+    self.m_currentPowerup = "single"
 end
 
 function Player:render()
@@ -34,7 +35,21 @@ end
 
 function Player:shoot(self, dt)
     if (love.keyboard.wasPressed("space")) then
-        table.insert(Bullets, Bullet())
-        Bullets[#Bullets]:init(self.m_x + SPRITEWIDTH / 2 - 5, self.m_y)
+        -- Calculate total width of each layer of bullets to align center to player
+        local bullets = BULLET_QUADS_PROPERTIES[self.m_currentPowerup].bullets
+        local totalWidth = 0
+        for i = 1, bullets do
+            totalWidth = i * BULLET_QUADS_PROPERTIES[self.m_currentPowerup].width
+        end
+
+        -- Calculate first X of the most left bullet
+        if (bullets >= 2) then totalWidth = totalWidth + 5 * bullets end
+        local firstLeftX = self.m_x + SPRITEWIDTH / 2 - totalWidth / 2
+
+        -- Generate bullets after being aligned center to player
+        for i = 0, bullets - 1 do
+            table.insert(Bullets, Bullet())
+            Bullets[#Bullets]:init(firstLeftX + i * 20, self.m_y)
+        end
     end
 end
