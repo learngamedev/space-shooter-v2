@@ -7,11 +7,17 @@ function love.load()
 
     player = Player()
     getBulletQuads()
+    getEnemyQuads()
+
+    enemyTable = EnemyTable()
+    enemyTable:init()
+
+    enemyTable:add(0, 0, "minion", 100, 100)
 end
 
 function love.draw()
     love.graphics.setColor(0, 255, 0)
-    love.graphics.print("FPS: "..love.timer.getFPS())
+    love.graphics.print("FPS: " .. love.timer.getFPS())
     love.graphics.setColor(255, 255, 255)
 
     player:render()
@@ -19,16 +25,19 @@ function love.draw()
         v:render()
     end
 
-    printString("Hello, world", 0, 100)
+    enemyTable:render()
 end
 
 function love.update(dt)
-    player:update(dt)
-    
-    for k, v in ipairs(Bullets) do
-        v:update(dt)
-    end
+    if (dt < 1) then
+        player:update(dt)
 
+        for k, v in ipairs(Bullets) do
+            v:update(dt)
+        end
+
+        enemyTable:update(dt)
+    end
     -- Reset keyboard input
     love.keyboard.keysPressed = {}
 end

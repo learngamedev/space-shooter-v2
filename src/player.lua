@@ -49,7 +49,7 @@ function Player:shoot(self, dt)
         -- Generate bullets after being aligned center to player
         for i = 0, bullets - 1 do
             table.insert(Bullets, Bullet())
-            Bullets[#Bullets]:init(firstLeftX + i * 20, self.m_y)
+            Bullets[#Bullets]:init(firstLeftX + i * 20, self.m_y, self.m_currentPowerup)
         end
     end
 end
