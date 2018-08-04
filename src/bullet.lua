@@ -13,18 +13,18 @@ BULLET_QUADS_PROPERTIES = {
     ["single"] = {
         x = 0, y = 0,
         width = 10, height = 10,
-        cooldown = 50, bullets = 1,
+        cooldown = 30, bullets = 1,
         damage = 10
     },
     ["double"] = {
         x = 10, y = 0,
         width = 8, height = 17,
-        cooldown = 80, bullets = 2
+        cooldown = 50, bullets = 2
     },
     ["triple"] = {
         x = 37, y = 0,
         width = 12, height = 17,
-        cooldown = 90, bullets = 3
+        cooldown = 70, bullets = 3
     }
 }
 

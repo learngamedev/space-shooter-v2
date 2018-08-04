@@ -12,13 +12,16 @@ function love.load()
     enemyTable = EnemyTable()
     enemyTable:init()
 
-    enemyTable:add(0, 0, "minion", 100, 100)
+    enemyTable:add(-30, 50, "minion", 50, 50)
+    enemyTable:add(-30, 90, "minion", 90, 90)
+    enemyTable:add(-30, 120, "minion", 120, 120)
+    enemyTable:add(-30, 150, "minion", 150, 150)
+    enemyTable:add(-30, 180, "minion", 180, 180)
+    enemyTable:add(300, -380, "octoboss", 300, 200)
 end
 
 function love.draw()
-    love.graphics.setColor(0, 255, 0)
-    love.graphics.print("FPS: " .. love.timer.getFPS())
-    love.graphics.setColor(255, 255, 255)
+    Background:render()
 
     player:render()
     for k, v in ipairs(Bullets) do
@@ -26,10 +29,14 @@ function love.draw()
     end
 
     enemyTable:render()
+
+    watchFPS()
 end
 
 function love.update(dt)
     if (dt < 1) then
+        Background:update(dt)
+
         player:update(dt)
 
         for k, v in ipairs(Bullets) do

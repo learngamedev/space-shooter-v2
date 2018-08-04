@@ -72,3 +72,10 @@ function printString(text, x, y)
         love.graphics.draw(FONTIMAGE, Letter_Quads[table_text[i+1]], x + i * 17, y)
     end
 end
+
+-- Watch FPS
+function watchFPS()
+    love.graphics.setColor(0, 255, 0)
+    love.graphics.print("FPS: " ..love.timer.getFPS())
+    love.graphics.setColor(255, 255, 255)
+end

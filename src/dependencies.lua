@@ -10,3 +10,4 @@ require("./src/bullet")
 require("./src/player")
 require("./src/enemy")
 require("./src/enemy_table")
+require("./src/background") -- implement parallax scrolling

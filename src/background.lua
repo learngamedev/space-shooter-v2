@@ -1,0 +1,28 @@
+Background = {}
+
+local BACKGROUND_IMAGE = love.graphics.newImage("assets/graphics/background.png")
+local BACKGROUND_HEIGHT = BACKGROUND_IMAGE:getHeight()
+local BACKGROUND_Y_1 = -(BACKGROUND_HEIGHT - WINDOW_HEIGHT)
+local BACKGROUND_Y_2 = BACKGROUND_Y_1 - BACKGROUND_HEIGHT
+local SCROLLING_SPEED = 120
+
+function Background:render()
+    love.graphics.draw(BACKGROUND_IMAGE, 0, BACKGROUND_Y_1)
+    love.graphics.draw(BACKGROUND_IMAGE, 0, BACKGROUND_Y_2) 
+end
+
+function Background:update(dt)
+    if (BACKGROUND_Y_1 <= WINDOW_HEIGHT) and (BACKGROUND_Y_1 >= -(BACKGROUND_HEIGHT - WINDOW_HEIGHT)) then
+        BACKGROUND_Y_1 = math.min(WINDOW_HEIGHT, BACKGROUND_Y_1 + SCROLLING_SPEED * dt)
+        BACKGROUND_Y_2 = BACKGROUND_Y_2 + SCROLLING_SPEED * dt
+        if (BACKGROUND_Y_1 == WINDOW_HEIGHT) then
+            BACKGROUND_Y_1 = BACKGROUND_Y_2 - BACKGROUND_HEIGHT
+        end
+    elseif (BACKGROUND_Y_2 <= WINDOW_HEIGHT) and (BACKGROUND_Y_2 >= -(BACKGROUND_HEIGHT - WINDOW_HEIGHT)) then
+        BACKGROUND_Y_2 = math.min(WINDOW_HEIGHT, BACKGROUND_Y_2 + SCROLLING_SPEED * dt)
+        BACKGROUND_Y_1 = BACKGROUND_Y_1 + SCROLLING_SPEED * dt
+        if (BACKGROUND_Y_2 == WINDOW_HEIGHT) then
+            BACKGROUND_Y_2 = BACKGROUND_Y_1 - BACKGROUND_HEIGHT
+        end
+    end
+end
