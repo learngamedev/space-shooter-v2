@@ -9,26 +9,20 @@ function love.load()
     getBulletQuads()
     getEnemyQuads()
 
-    enemyTable = EnemyTable()
-    enemyTable:init()
+    Enemy_Table:init()
+    Bullet_Table:init()
 
-    enemyTable:add(-30, 50, "minion", 50, 50)
-    enemyTable:add(-30, 90, "minion", 90, 90)
-    enemyTable:add(-30, 120, "minion", 120, 120)
-    enemyTable:add(-30, 150, "minion", 150, 150)
-    enemyTable:add(-30, 180, "minion", 180, 180)
-    enemyTable:add(300, -380, "octoboss", 300, 200)
+    Enemy_Table:add(300, -200, "octoboss", 300, 200)
 end
 
 function love.draw()
     Background:render()
 
     player:render()
-    for k, v in ipairs(Bullets) do
-        v:render()
-    end
 
-    enemyTable:render()
+    Bullet_Table:render()
+
+    Enemy_Table:render()
 
     watchFPS()
 end
@@ -39,11 +33,9 @@ function love.update(dt)
 
         player:update(dt)
 
-        for k, v in ipairs(Bullets) do
-            v:update(dt)
-        end
+        Bullet_Table:update(dt)
 
-        enemyTable:update(dt)
+        Enemy_Table:update(dt)
     end
     -- Reset keyboard input
     love.keyboard.keysPressed = {}
