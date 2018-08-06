@@ -77,7 +77,7 @@ function Enemy:move(self, dt, newX, newY)
             self.m_x = math.max(newX, self.m_x - deltaX / deltaX * self.m_speed * dt)
         end
     end
-    
+
     if (self.m_y ~= newY) then
         local deltaY = newY - self.m_y
         if (deltaY > 0) then
@@ -89,6 +89,7 @@ function Enemy:move(self, dt, newX, newY)
 
     if (self.m_x == newX) and (self.m_y == newY) then
         self.m_posReached = true
+        self.m_chaseCooldownTimer = 0
     end
 end
 
@@ -98,6 +99,13 @@ function Enemy:getRandomPos(self)
     return randX, randY
 end
 
+local lastPlayerX, lastPlayerY
 function Enemy:chasePlayer(self, dt)
-    Enemy:move(self, dt, player.m_x, player.m_y)
+    if (self.m_posReached) then
+        self.m_posReached = false
+        lastPlayerX = math.random(player.m_x, player.m_x + player.m_width)
+        lastPlayerY = math.random(player.m_y, player.m_y + player.m_height)
+    else
+        Enemy:move(self, dt, lastPlayerX, lastPlayerY)
+    end
 end

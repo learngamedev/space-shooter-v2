@@ -1,4 +1,4 @@
-Enemy_Table = Class {}
+Enemy_Table = {}
 
 function Enemy_Table:init()
     self.m_table = {}
@@ -34,4 +34,9 @@ end
 function Enemy_Table:add(x, y, type, formX, formY)
     table.insert(self.m_table, Enemy())
     self.m_table[#self.m_table]:init(x, y, type, formX, formY)
+end
+ 
+function Enemy_Table:addSymmetryByX(x, y, type, formX, formY)
+    Enemy_Table:add(x,y,type,formX,formY)
+    Enemy_Table:add(WINDOW_WIDTH - x, y, type, WINDOW_WIDTH - formX, formY)
 end

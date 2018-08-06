@@ -4,10 +4,10 @@ local SPRITEWIDTH = 46
 local SPRITEHEIGHT = 45
 local SPRITEQUAD = love.graphics.newQuad(0, 51, SPRITEWIDTH, SPRITEHEIGHT, SHIPS_SPRITESHEET:getDimensions())
 
-local HEALTHBARWIDTH = 78
-local HEALTHBARHEIGHT = 26
-local HEALTHBARQUAD = love.graphics.newQuad(0, 38, HEALTHBARWIDTH, HEALTHBARHEIGHT, HUD_SPRITESHEET:getDimensions())
-local HEALTHBARLEFT = 60
+local HEALTHBARWIDTH = 98
+local HEALTHBARHEIGHT = 32
+local HEALTHBARQUAD = love.graphics.newQuad(0, 82, HEALTHBARWIDTH, HEALTHBARHEIGHT, HUD_SPRITESHEET:getDimensions())
+local HEALTHBARLEFT = 80
 local HEALTHBARFILLQUAD
 
 local SPEED = 150
@@ -19,6 +19,7 @@ local PROTECT_COOLDOWN = 50
 function Player:init()
     self.m_x = love.graphics.getWidth() / 2 - SPRITEWIDTH / 2
     self.m_y = love.graphics.getHeight() / 2 - SPRITEHEIGHT / 2
+    self.m_width, self.m_height = SPRITEWIDTH, SPRITEHEIGHT
     self.m_currentPowerup = "single"
     self.m_cooldowntimer = 0
 
@@ -37,7 +38,7 @@ function Player:render()
 
     -- Render health bar of player
     love.graphics.draw(HUD_SPRITESHEET, HEALTHBARQUAD, self.m_HPx, self.m_HPy)
-    HEALTHBARFILLQUAD = love.graphics.newQuad(0, 26, HEALTHBARLEFT, 12, HUD_SPRITESHEET:getDimensions())
+    HEALTHBARFILLQUAD = love.graphics.newQuad(0, 64, HEALTHBARLEFT, 18, HUD_SPRITESHEET:getDimensions())
     love.graphics.draw(HUD_SPRITESHEET, HEALTHBARFILLQUAD, self.m_HPx + 9, self.m_HPy + 7)
 end
 
@@ -97,7 +98,7 @@ function Player:hurt(self, dt)
             local e_hb = { x = v.m_x + e.hitbox.dX, y = v.m_y + e.hitbox.dY, w = e.hitbox.w, h = e.hitbox.h}
             love.graphics.rectangle("fill", e_hb.x, e_hb.y, e_hb.w, e_hb.h)
             if (checkCollision(hitbox.x, hitbox.y, hitbox.w, hitbox.h, e_hb.x, e_hb.y, e_hb.w, e_hb.h)) then
-                HEALTHBARLEFT = HEALTHBARLEFT - 60 / 100 * 20
+                HEALTHBARLEFT = HEALTHBARLEFT - 80 / 100 * 20
                 self.m_HP = self.m_HP - 20
                 PROTECT_TIMER = 120
                 HURT:play()
